@@ -1,0 +1,18 @@
+{% assign data = page.username | append: ',' | append: page.filename %}
+{% assign collection = data | get_collection %}
+
+{% for track in collection %}
+<a href="#{{ forloop.index }}" class="listitem" data-selected="false" data-title="{{ track.title }}" data-artist="{{ track.artist }}" data-cover="{{ track.cover }}" data-file="{{ track.file }}">
+  <div class="absolute size-10 bg-white bg-opacity-10">
+    <img loading="eager" src="{% if track.cover contains 'https' %}{{ track.cover }}{% else %}https://xmp3.github.io/image/{{ track.cover }}{% endif %}" alt="{{ track.title }} cover" class="fallback-image-img" width="100%" height="100%" onerror="this.style.display='none';" onload="this.style.display='block';">
+    {% include icons/crotchet.html class="fallback-image-icon" %}
+  </div>
+  <div class="pl-14 w-full">
+    <div class="flex items-center">
+      <img src="/assets/img/equaliser-animated.gif" class="hidden equaliser" width="14" height="14" alt="">
+      <div class="truncate primary">{{ track.title }}</div>
+    </div>
+    <div class="truncate secondary">{{ track.artist }}</div>
+  </div>
+</a>
+{% endfor %}
