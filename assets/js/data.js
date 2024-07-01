@@ -1,0 +1,1 @@
+const data=Array.from(document.querySelectorAll(".listitem")).map(t=>({title:t.getAttribute("data-title"),artist:t.getAttribute("data-artist"),cover:t.getAttribute("data-cover"),file:t.getAttribute("data-file")}));export default data;
