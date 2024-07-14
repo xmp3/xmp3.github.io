@@ -1,0 +1,59 @@
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const chips = document.querySelectorAll('.chip');
+  const output = document.querySelector('main nav');
+  const input = document.getElementById('search-bar');
+  const items = [...document.querySelectorAll('.listitem')];
+
+  const list = items.map(item => ({
+    id: item.getAttribute('attr-id'),
+    name: item.getAttribute('attr-name'),
+    description: item.getAttribute('attr-description'),
+    element: item,
+  }));
+
+  const fuseOptions = {
+    keys: ['name', 'description'],
+    threshold: 0.3
+  };
+
+  function search(id) {
+    let elements = filterById(id);
+    if (input.value.length > 0) {
+      const fuse = new Fuse(elements.map(item => list.find(i => i.element === item)), fuseOptions);
+      elements = fuse.search(input.value).map(result => result.item.element);
+    }
+    render(elements);
+  }
+
+  function filterById(id) {
+    if (id === 'all') {
+      return items;
+    }
+    return list.filter(item => item.id === id)
+      .map(item => item.element);
+  }
+
+  function render(elements) {
+    output.innerHTML = '';
+    const fragment = document.createDocumentFragment();
+    elements.forEach(element => fragment.appendChild(element));
+    output.appendChild(fragment);
+  }
+
+  function currentId() {
+    const filter = document.querySelector('.chip[attr-selected=true]');
+    return filter?.getAttribute('attr-id') || 'all';
+  }
+
+  chips.forEach(chip => chip.addEventListener('click', function() {
+    search(this.getAttribute('attr-id'));
+  }));
+
+  input.addEventListener('input', function () {
+    search(currentId());
+  });
+
+  render(filterById(currentId()));
+});
+</script>
