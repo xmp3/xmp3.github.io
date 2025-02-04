@@ -1,0 +1,31 @@
+---
+layout: compress
+---
+
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="max-age=1800">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}" />
+  <link rel="preconnect" href="https://xmp3.github.io">
+  <link rel="dns-prefetch" href="https://xmp3.github.io">
+  <link rel="icon" href="https://github.com/xmp3.png" type="image/png">
+  {% if page.extra_head %}{{ page.extra_head }}{% endif %}
+  {% if page.include_scripts %}
+    {% for script in page.include_scripts %}
+      {% include {{ script }}.html %}
+    {% endfor %}
+  {% endif %}
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  {% include styles/default.css.html %}
+  {% if page.include_styles %}
+    {% for style in page.include_styles %}
+     {% include {{ style }}.html %}
+    {% endfor %}
+  {% endif %}
+</head>
+<body>{{ content }}</body>
+</html>

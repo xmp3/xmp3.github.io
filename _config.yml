@@ -1,0 +1,17 @@
+title: xmp3
+description: Listen and download music
+
+github:
+  username: xmp3
+  repositories:
+    settings:
+      name: xmp3
+      branch: main
+    collections:
+      name: collections
+      settings: collections
+
+defaults:
+  -
+    values:
+      layout: default
