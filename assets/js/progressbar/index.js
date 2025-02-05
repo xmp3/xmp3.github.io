@@ -1,0 +1,1 @@
+import ProgressBar from"./progressbar.js";document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll(".progressbar-container").forEach(r=>new ProgressBar(r))});
