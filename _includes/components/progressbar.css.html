@@ -1,0 +1,56 @@
+<style>
+  .progressbar-container {
+    width: 100%;
+    height: 20px;
+    cursor: pointer;
+    position: relative;
+    --fg-color: rgb(255,255,255);
+    --bg-color: rgba(255,255,255,.2);
+    --progressbar-height: 4px;
+    --progressbar-transform: 0%;
+    --progressbar-radius: calc(var(--progressbar-height) / 2);
+  }
+  .progressbar-background,
+  .progressbar-filled-container {
+    width: 100%;
+    height: var(--progressbar-height);
+    border-radius: var(--progressbar-radius);
+  }
+  .progressbar-background {
+    top: 50%;
+    position: absolute;
+    display: flex;
+    display: -ms-flexbox;
+    pointer-events: none;
+    transform: translateY(-50%);
+    background-color: var(--bg-color);
+  }
+  .progressbar-filled-container {
+    overflow: hidden;
+  }
+  .progressbar-filled {
+    width: 100%;
+    height: var(--progressbar-height);
+    will-change: transform;
+    transform: translateX(calc(var(--progressbar-transform) - 100%));
+    border-radius: var(--progressbar-radius);
+    background-color: var(--fg-color);
+  }
+  .progressbar-thumb {
+    top: 50%;
+    left: var(--progressbar-transform);
+    position: absolute;
+    will-change: left;
+    z-index: 100;
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+    margin-left: -6px;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+  }
+  .progressbar-container:hover .progressbar-thumb {
+    background-color: var(--fg-color);
+  }
+</style>

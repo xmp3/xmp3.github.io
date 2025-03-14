@@ -1,0 +1,98 @@
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const chips = document.querySelectorAll('.chip');
+  const output = document.querySelector('#collections');
+  const input = document.querySelector('#search-bar');
+  const allItems = [...document.querySelectorAll('.listitem')];
+
+  const list = allItems.map(item => ({
+    id: item.getAttribute('attr-id'),
+    name: item.getAttribute('attr-name'),
+    description: item.getAttribute('attr-description'),
+    element: item,
+  }));
+
+  const fuseOptions = {
+    keys: ['name', 'description'],
+    threshold: 0.3
+  };
+
+  let currentElements = [];
+  let loadedCount = 0;
+  const batchSize = 10;
+  let observer;
+  let sentinel;
+
+  function loadBatch() {
+    const nextItems = currentElements.slice(loadedCount, loadedCount + batchSize);
+    nextItems.forEach(element => output.appendChild(element));
+    loadedCount += nextItems.length;
+
+    if (loadedCount < currentElements.length) {
+      output.appendChild(sentinel);
+    } else if(observer) {
+      observer.disconnect();
+    }
+  }
+
+  function setupObserver() {
+    if (observer) observer.disconnect();
+
+    observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        loadBatch();
+      }
+    }, { rootMargin: '100px' });
+
+    observer.observe(sentinel);
+  }
+
+  function render(elements) {
+    currentElements = elements;
+    loadedCount = 0;
+    output.innerHTML = '';
+
+    sentinel = document.createElement('div');
+    sentinel.style.height = '1px';
+    sentinel.style.width = '100%';
+
+    loadBatch();
+    if (loadedCount < currentElements.length) {
+      output.appendChild(sentinel);
+      setupObserver();
+    }
+  }
+
+  function filterById(id) {
+    if (id === 'all') {
+      return allItems;
+    }
+    return list.filter(item => item.id === id)
+      .map(item => item.element);
+  }
+
+  function search(id) {
+    let elements = filterById(id);
+    if (input.value.length > 0) {
+      const fuse = new Fuse(elements.map(item => list.find(i => i.element === item)), fuseOptions);
+      elements = fuse.search(input.value).map(result => result.item.element);
+    }
+    render(elements);
+  }
+
+  function currentId() {
+    const filter = document.querySelector('.chip[attr-selected=true]');
+    return filter?.getAttribute('attr-id') || 'all';
+  }
+
+  chips.forEach(chip => chip.addEventListener('click', function() {
+    search(this.getAttribute('attr-id'));
+  }));
+
+  input.addEventListener('input', function () {
+    search(currentId());
+  });
+
+  render(filterById(currentId()));
+});
+</script>

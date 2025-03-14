@@ -1,0 +1,17 @@
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const input = document.getElementById('search-bar');
+  const sections = document.querySelector('#sections');
+  const collections = document.querySelector('#collections');
+
+  input.addEventListener('input', function () {
+    if (input.value.trim() === '') {
+      sections.style.display = 'grid';
+      collections.style.display = 'none';
+    } else {
+      sections.style.display = 'none';
+      collections.style.display = 'block';
+    }
+  });
+});
+</script>
