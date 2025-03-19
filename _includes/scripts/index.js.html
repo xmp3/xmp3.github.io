@@ -1,0 +1,13 @@
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const input = document.getElementById('searchbar'),
+        sections = document.getElementById('sections'),
+        collections = document.getElementById('collections');
+
+  input.addEventListener('input', () => {
+    const empty = !input.value.trim();
+    sections.style.display = empty ? 'grid' : 'none';
+    collections.style.display = empty ? 'none' : 'block';
+  });
+});
+</script>

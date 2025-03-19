@@ -1,0 +1,13 @@
+<div class="relative{% if include.class %} {{ include.class }}{% endif %}">
+  <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+    {% include icons/search.html class="w-5 h-5 fill-black" %}
+  </div>
+  {% if include.id %}<label for="{{ include.id }}" class="sr-only">Search</label>{% endif %}
+  <input
+    {% if include.id %}id="{{ include.id }}"{% endif %}
+    class="block w-full h-12 pr-4 pl-10 text-black rounded placeholder:font-semibold placeholder-black/70 bg-white{% if include.extra_class %} {{ include.extra_class }}{% endif %}"
+    {% if include.spellcheck %}spellcheck="{{ include.spellcheck }}"{% endif %}
+    {% if include.autocomplete %}autocomplete="{{ include.autocomplete }}"{% endif %}
+    {% if include.placeholder %}placeholder="{{ include.placeholder }}"{% endif %}
+  >
+</div>

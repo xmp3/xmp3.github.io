@@ -1,0 +1,16 @@
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const items = document.querySelectorAll('.item');
+  const handleHashChange = () => {
+    const hash = window.location.hash;
+
+    items.forEach(item => {
+      const match = item.getAttribute('href') === hash;
+      item.setAttribute('attr-selected', match);
+    });
+  };
+
+  window.addEventListener('hashchange', handleHashChange, { passive: true });
+  handleHashChange();
+});
+</script>
