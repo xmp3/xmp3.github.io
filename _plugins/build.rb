@@ -7,35 +7,55 @@ module Jekyll
       collections = Jekyll::GitHub.get_collections()
       tracks = Jekyll::GitHub.get_tracks()
 
-      site.data['pages'] = pages.map do |page|
-        collection = collections.find { |col| col['id'] == page['collection_id'] }
+      # Agrupar páginas por ID (ex: "music", "jpop_citypop")
+      pages_grouped = pages.group_by { |page| page['id'] }
 
-        if collection.nil?
-          puts "Warning: no collection found for collection_id: #{page['collection_id']}"
-          next
+      site.data['pages'] = pages_grouped.map do |page_id, pages_in_group|
+        # Coletar coleções na ORDEM NATURAL (não ordenar)
+        page_collections = pages_in_group.map do |page|
+          collection = collections.find { |col| col['id'] == page['collection_id'] }
+          next unless collection
+
+          # Coletar tracks da coleção (sem IDs ainda)
+          collection_tracks = tracks.select { |track| track['collection_id'] == collection['id'] }
+
+          {
+            'id' => page_id,
+            'collection_id' => collection['id'],
+            'name' => collection['name'],
+            'description' => collection['description'],
+            'image' => collection['image'],
+            'tracks' => collection_tracks
+          }
+        end.compact
+
+        # Gerar IDs únicos para TODAS as tracks da página (ordem natural)
+        all_tracks = page_collections.flat_map { |col| col['tracks'] }
+          .each_with_index.map { |track, i| track.merge('id' => i + 1) }
+
+        # Atualizar as tracks de cada coleção com os IDs da página
+        page_collections.each do |col|
+          col['tracks'] = all_tracks.select { |t| t['collection_id'] == col['collection_id'] }
         end
 
-        collection_tracks = tracks.select { |track| track['collection_id'] == page['collection_id'] }
-        {
-          'id' => page['id'],
-          'collection_id' => page['collection_id'],
-          'name' => collection['name'],
-          'description' => collection['description'],
-          'image' => collection['image'],
-          'tracks' => collection_tracks
-        }
-      end
+        page_collections
+      end.flatten
 
-      pages_grouped = site.data['pages'].group_by { |row| row['id'] }
-
-      pages_grouped.each do |page_id, collections|
+      # Gerar páginas estáticas
+      site.data['pages'].group_by { |data| data['id'] }.each do |page_id, collections_data|
+        # Gerar Section (as coleções serão ordenadas no template, mas os IDs já estão corretos)
         site.pages << Section.new(site, site.source, {
           'page_id' => page_id,
-          'collections' => collections
+          'collections' => collections_data
         })
 
-        collections.each do |collection|
-          site.pages << Player.new(site, site.source, collection)
+        # Extrair todas as tracks da página (já com IDs únicos)
+        page_tracks = collections_data.flat_map { |col| col['tracks'] }
+
+        # Gerar Players com as mesmas tracks
+        collections_data.each do |collection|
+          player_data = collection.merge('tracks' => page_tracks)
+          site.pages << Player.new(site, site.source, player_data)
         end
       end
 

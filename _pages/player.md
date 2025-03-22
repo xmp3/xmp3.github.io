@@ -10,9 +10,9 @@ extra_head: |
 <main class="min-w-96 min-h-screen sm:max-w-sm mt-12 sm:mx-auto mb-6">
   {% include templates/player.html %}
   <nav>
-  {% for track in page.tracks %}
-    {% include templates/track.html %}
-  {% endfor %}
+    {% for track in page.tracks %}
+      {% include templates/track.html %}
+    {% endfor %}
   </nav>
 </main>
 
