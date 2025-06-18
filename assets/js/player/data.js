@@ -1,0 +1,1 @@
+export default[...document.querySelectorAll(".listitem")].map(t=>({title:t.getAttribute("attr-title"),artist:t.getAttribute("attr-artist"),cover:t.getAttribute("attr-cover"),file:t.getAttribute("attr-file")}));
