@@ -1,0 +1,10 @@
+title: xmp3
+description: Listen and download music
+
+github:
+  username: xmp3
+
+defaults:
+  -
+    values:
+      layout: default

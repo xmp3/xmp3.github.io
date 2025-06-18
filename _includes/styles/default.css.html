@@ -1,0 +1,118 @@
+<style type="text/tailwindcss">
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#111];
+  }
+  h5 {
+    @apply text-xl;
+  }
+  h6 {
+    @apply text-lg;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply flex items-center justify-center text-center text-white;
+  }
+  .chip {
+    @apply flex items-center h-9 px-4 text-sm text-white rounded-full bg-[#222];
+  }
+  .chip[attr-selected="true"] {
+    @apply text-black bg-white;
+  }
+  .listitem {
+    @apply relative flex items-center px-6 py-3;
+  }
+  .fallback-image-img {
+    @apply absolute hidden w-full h-full object-cover object-center z-10;
+  }
+  .fallback-image-icon {
+    @apply absolute top-[35%] left-[35%] w-[31.22%] h-[31.22%] z-0;
+  }
+}
+
+@layer utilities {
+  .primary {
+    @apply text-white;
+  }
+  .secondary {
+    @apply text-white/60;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE e Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari e Opera */
+  }
+}
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  outline: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 1rem;
+  line-height: 1.25rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+img {
+  user-select: none;
+  pointer-events: none;
+}
+
+svg {
+  fill: currentcolor;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+  user-select: none;
+}
+
+/*
+Extra small devices (phones, 640px and down)
+@media only screen and (max-width: 640px) {}
+*/
+
+/*
+Small devices (phones, 640px and up)
+@media only screen and (min-width: 640px) {}
+*/
+
+/*
+Medium devices (portrait tablets and large phones, 768px and up)
+@media only screen and (min-width: 768px) {}
+*/
+
+/*
+Large devices (landscape tablets, 1024px and up)
+@media only screen and (min-width: 1024px) {}
+*/
+
+/*
+Extra large devices (laptops/desktops, 1280px and up)
+@media only screen and (min-width: 1280px) {}
+*/
+
+/*
+Double extra large devices (large laptops and desktops, 1536px and up)
+@media only screen and (min-width: 1536px) {}
+*/
+</style>

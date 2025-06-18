@@ -1,0 +1,16 @@
+<div
+  {% if include.id %}id="{{ include.id }}"{% endif %}
+  {% if include.min %}attr-min="{{ include.min }}"{% endif %}
+  {% if include.max %}attr-max="{{ include.max }}"{% endif %}
+  {% if include.step %}attr-step="{{ include.step }}"{% endif %}
+  {% if include.value %}attr-value="{{ include.value }}"{% endif %}
+  class="progressbar-container{% if include.extra_class %} {{ include.extra_class }}{% endif %}"
+  style="--progressbar-transform: {% if include.value and include.max %}{{ include.value | divided_by: include.max | times: 100 }}{% else %}0%;{% endif %} --progressbar-duration: 1000ms;"
+>
+  <div class="progressbar-background">
+    <div class="progressbar-filled-container">
+      <div class="progressbar-filled"></div>
+    </div>
+    <div class="progressbar-thumb" tabindex="0"></div>
+  </div>
+</div>

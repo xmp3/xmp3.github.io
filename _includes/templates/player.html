@@ -1,0 +1,46 @@
+<div class="flex flex-col justify-between min-h-12 mb-12">
+  <div class="flex items-center justify-center px-6">
+    <figure class="w-full h-full m-0">
+      <div class="relative w-full h-full min-w-80 mx-auto aspect-square rounded-lg bg-white/10">
+        <img id="cover" class="fallback-image-img rounded-lg" width="100%" height="100%" alt="" crossorigin="anonymous" onerror="this.style.display='none';" onload="this.style.display='block';">
+        {% include icons/quaver.html class="fallback-image-icon" %}
+      </div>
+      <figcaption class="min-h-24 mt-8 pb-4 content-end">
+        <h5 id="title">Title</h5>
+        <span id="artist" class="secondary">Artist</span>
+      </figcaption>
+    </figure>
+  </div>
+  <div class="flex flex-col gap-4 px-6">
+    <div>
+      {% include components/progressbar.html id="seekbar" %}
+      <div class="flex items-center justify-between select-none">
+        <span id="current-duration" class="text-sm secondary">00:00</span>
+        <span id="total-duration" class="text-sm secondary">00:00</span>
+      </div>
+    </div>
+    <div class="flex items-center justify-between">
+      <a href="/{{ page.id }}" class="btn size-10" aria-label="View all collections">
+        {% include icons/collections.html class="w-6 h-6" %}
+      </a>
+      <button id="previous" class="btn size-10" aria-label="Previous track">
+        {% include icons/previous.html class="w-6 h-6" %}
+      </button>
+      <button id="play-pause" class="btn size-14 rounded-full bg-white text-black" aria-label="Play/Pause track">
+        {% include icons/play.html class="w-5 h-5" %}
+      </button>
+      <button id="next" class="btn size-10" aria-label="Next track">
+        {% include icons/next.html class="w-6 h-6" %}
+      </button>
+      <a id="download" class="btn size-10" aria-label="Download track">
+        {% include icons/download.html class="w-6 h-6" %}
+      </a>
+    </div>
+    <div class="flex items-center flex-1 gap-1">
+      <button id="volume" class="btn size-10" aria-label="Toggle sound/mute">
+        {% include icons/sound.html class="w-5 h-5" %}
+      </button>
+      {% include components/progressbar.html id="volume-control" class="flex-1" min="0" max="100" step="1" %}
+    </div>
+  </div>
+</div>

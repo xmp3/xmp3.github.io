@@ -1,0 +1,14 @@
+{% assign track = include.track %}
+<a attr-selected="false" attr-title="{{ track.title | escape }}" attr-artist="{{ track.artist | escape }}" attr-cover="{{ track.cover }}" attr-file="{{ track.file }}" href="#{{ track.id }}" class="listitem item {% if track.collection_id != page.collection_id %}hidden{% endif %}">
+  <div class="absolute size-10 bg-white/10">
+    <img loading="{% if track.collection_id != page.collection_id %}lazy{% else %}edge{% endif %}" src="{% if track.cover contains 'https' %}{{ track.cover }}{% else %}https://raw.githubusercontent.com/xmp3/images/{{ track.cover }}{% endif %}" class="fallback-image-img" width="100%" height="100%" alt="{{ track.title }}" onerror="this.style.display='none';" onload="this.style.display='block';">
+    {% include icons/crotchet.html class="fallback-image-icon" %}
+  </div>
+  <div class="pl-14 w-full">
+    <div class="flex items-center">
+      <img src="/assets/img/equaliser-animated.gif" class="hidden equaliser" width="14" height="14" alt="">
+      <div class="truncate primary">{{ track.title }}</div>
+    </div>
+    <div class="truncate secondary">{{ track.artist }}</div>
+  </div>
+</a>

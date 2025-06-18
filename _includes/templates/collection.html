@@ -1,0 +1,24 @@
+{% assign collection = include.collection %}
+{% assign first_track = collection.tracks[0] %}
+<a attr-id="{{ collection.description | downcase }}" attr-name="{{ collection.name | escape }}" attr-description="{{ collection.description | escape}}" href="/{{ collection.id }}/{{ collection.collection_id }}/#{{ first_track.id }}" class="listitem">
+  <div class="absolute size-12 bg-white/10{% if collection.description == 'Artist' %} rounded-full{% endif %}">
+    <img loading="lazy" src="{% if collection.image contains 'https' %}{{ collection.image }}{% else %}https://raw.githubusercontent.com/xmp3/images/{{ collection.image }}{% endif %}" alt="{{ collection.name }}" class="fallback-image-img{% if collection.description == 'Artist' %} rounded-full{% endif %}" width="100%" height="100%" onerror="this.style.display='none';" onload="this.style.display='block';">
+  </div>
+  <div class="pl-16 w-full">
+    <div class="truncate primary">{{ collection.name }}</div>
+    <div class="truncate secondary">{{ collection.description }}</div>
+  </div>
+</a>
+
+{% for track in collection.tracks %}
+  <a attr-id="music" attr-name="{{ track.title | escape }}" attr-description="{{ track.artist | escape }}" href="/{{ collection.id }}/{{ collection.collection_id }}/#{{ track.id }}" class="listitem">
+    <div class="absolute size-12 bg-white/10">
+      <img loading="lazy" src="{% if track.cover contains 'https' %}{{ track.cover }}{% else %}https://raw.githubusercontent.com/xmp3/images/{{ track.cover }}{% endif %}" alt="" class="fallback-image-img" width="100%" height="100%" onerror="this.style.display='none';" onload="this.style.display='block';">
+      {% include icons/crotchet.html class="fallback-image-icon" %}
+    </div>
+    <div class="pl-16 w-full">
+      <div class="truncate primary">{{ track.title }}</div>
+      <div class="truncate secondary">{{ track.artist }}</div>
+    </div>
+  </a>
+{% endfor %}

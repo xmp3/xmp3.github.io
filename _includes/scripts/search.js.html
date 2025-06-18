@@ -1,0 +1,117 @@
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const chips = document.querySelectorAll('.chip');
+  const output = document.querySelector('#collections');
+  const input = document.querySelector('#searchbar');
+  const allItems = [...document.querySelectorAll('.listitem')];
+
+  const list = allItems.map(item => ({
+    id: item.getAttribute('attr-id'),
+    name: item.getAttribute('attr-name'),
+    description: item.getAttribute('attr-description'),
+    element: item,
+  }));
+
+  const fuseOptions = {
+    keys: ['name', 'description'],
+    threshold: 0.3
+  };
+
+  let currentElements = [];
+  let loadedCount = 0;
+  const batchSize = 10;
+  let observer;
+  let sentinel;
+  let debounceTimeout;
+
+  function setImagesLoadingEager(elements) {
+    elements.forEach(el => {
+      el.querySelectorAll('img').forEach(img => img.loading = 'eager');
+    });
+  }
+
+  function loadBatch() {
+    const nextItems = currentElements.slice(loadedCount, loadedCount + batchSize);
+    nextItems.forEach(element => output.appendChild(element));
+    setImagesLoadingEager(nextItems);
+    loadedCount += nextItems.length;
+
+    if (loadedCount < currentElements.length) {
+      output.appendChild(sentinel);
+    } else if (observer) {
+      observer.disconnect();
+    }
+  }
+
+  function setupObserver() {
+    if (observer) observer.disconnect();
+
+    observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        loadBatch();
+      }
+    }, { rootMargin: '100px' });
+
+    observer.observe(sentinel);
+  }
+
+  function render(elements) {
+    currentElements = elements;
+    loadedCount = 0;
+    output.innerHTML = '';
+
+    sentinel = document.createElement('div');
+    sentinel.style.height = '1px';
+    sentinel.style.width = '100%';
+
+    loadBatch();
+
+    if (loadedCount < currentElements.length) {
+      output.appendChild(sentinel);
+      setupObserver();
+    }
+  }
+
+  function filterById(id) {
+    if (id === 'all') {
+      return allItems;
+    }
+    const collections = list.filter(item => item.id === id).map(item => item.element);
+    let tracks = [];
+    collections.forEach(collection => {
+      const href = collection.getAttribute('href');
+      tracks = tracks.concat(allItems.filter(item =>
+        item.getAttribute('href')?.startsWith(href + '#')
+      ));
+    });
+    return collections.concat(tracks);
+  }
+
+  function search(id) {
+    let elements = filterById(id);
+    if (input.value.length > 0) {
+      const fuse = new Fuse(elements.map(item => list.find(i => i.element === item)), fuseOptions);
+      elements = fuse.search(input.value).map(result => result.item.element);
+    }
+    render(elements);
+  }
+
+  function currentId() {
+    const filter = document.querySelector('.chip[attr-selected=true]');
+    return filter?.getAttribute('attr-id') || 'all';
+  }
+
+  chips.forEach(chip => chip.addEventListener('click', function() {
+    search(this.getAttribute('attr-id'));
+  }));
+
+  input.addEventListener('input', function () {
+    clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(() => {
+      search(currentId());
+    }, 300);
+  });
+
+  render(filterById(currentId()));
+});
+</script>

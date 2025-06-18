@@ -1,0 +1,11 @@
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const colorThief = new ColorThief();
+  const image = document.getElementById('cover');
+
+  image.addEventListener('load', function () {
+    const [r, g, b] = colorThief.getColor(image);
+    document.body.style.background = `linear-gradient(180deg, rgb(${r}, ${g}, ${b}), #111 50em)`;
+  });
+});
+</script>
