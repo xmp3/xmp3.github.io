@@ -1,0 +1,36 @@
+{
+  "background_color": "#000000",
+  "description": "Listen and download music",
+  "dir": "auto",
+  "display": "standalone",
+  "name": "xmp3",
+  "orientation": "portrait",
+  "scope": "/",
+  "short_name": "xmp3",
+  "start_url": "/",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "https://github.com/xmp3.png",
+      "type": "image/png",
+      "sizes": "460x460",
+      "isSquare": true,
+      "isPng": true,
+      "isWebp": false,
+      "isJpg": false,
+      "width": 460,
+      "is512x512": false,
+      "is256x256": false,
+      "is192x192": false
+    }
+  ],
+  "id": "io.github.xmp3",
+  "lang": "en",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone"
+  ],
+  "categories": [
+    "music"
+  ]
+}
