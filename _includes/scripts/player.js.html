@@ -1,0 +1,70 @@
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const colorThief = new ColorThief();
+  const image = document.getElementById('cover');
+  const title = document.getElementById('title');
+  const artist = document.getElementById('artist');
+  const wrapper = document.getElementById('wrapper');
+
+  image.addEventListener('load', function () {
+    const [r, g, b] = colorThief.getColor(image);
+    wrapper.style.background = `linear-gradient(180deg, rgb(${r}, ${g}, ${b}), #111 50em)`;
+  });
+
+  const autoScrollTargets = [title, artist].filter(Boolean);
+
+  const updateAutoScroll = element => {
+    const container = element.parentElement;
+
+    if (!container) {
+      return;
+    }
+
+    const text = element.textContent.trim();
+
+    element.classList.remove('marquee-scroll');
+    element.classList.add('truncate');
+    element.removeAttribute('data-text');
+    element.style.removeProperty('--marquee-duration');
+
+    void element.offsetWidth;
+
+    const shouldScroll = text.length > 0 && element.scrollWidth > container.clientWidth + 1;
+
+    if (!shouldScroll) {
+      return;
+    }
+
+    element.setAttribute('data-text', text);
+    element.classList.remove('truncate');
+    element.classList.add('marquee-scroll');
+
+    const overflow = element.scrollWidth - container.clientWidth;
+    const duration = Math.max(overflow / 28, 6);
+    element.style.setProperty('--marquee-duration', `${duration}s`);
+  };
+
+  const scheduleAutoScrollUpdate = element => {
+    requestAnimationFrame(() => updateAutoScroll(element));
+  };
+
+  autoScrollTargets.forEach(element => {
+    scheduleAutoScrollUpdate(element);
+
+    const observer = new MutationObserver(() => scheduleAutoScrollUpdate(element));
+    observer.observe(element, {
+      childList: true,
+      characterData: true,
+      subtree: true,
+    });
+  });
+
+  window.addEventListener('resize', () => {
+    autoScrollTargets.forEach(scheduleAutoScrollUpdate);
+  }, { passive: true });
+
+  window.addEventListener('load', () => {
+    autoScrollTargets.forEach(scheduleAutoScrollUpdate);
+  });
+});
+</script>

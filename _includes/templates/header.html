@@ -1,0 +1,16 @@
+<header class="min-w-96 sm:max-w-sm sm:mx-auto pt-4 px-4 mb-3">
+  <h1 class="text-xl font-bold mb-3">Search</h1>
+  {% include components/searchbar.html
+  id="searchbar"
+  class="mb-4"
+  spellcheck="false"
+  autocomplete="off"
+  placeholder="Artists, songs, or playlists" %}
+  <nav class="flex gap-x-2">
+    <a href="/" class="chip item">{% include icons/home.html class="w-4 h-4" %}</a>
+    <a href="#all" class="chip item" attr-id="all" attr-selected="false">All</a>
+    <a href="#artist" class="chip item" attr-id="artist" attr-selected="false">Artists</a>
+    <a href="#music" class="chip item" attr-id="music" attr-selected="false">Music</a>
+    <a href="#playlist" class="chip item" attr-id="playlist" attr-selected="false">Playlists</a>
+  </nav>
+</header>

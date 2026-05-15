@@ -1,0 +1,49 @@
+- name: "Music"
+  class: "bg-[#db148b]"
+  src: "https://raw.githubusercontent.com/xmp3/images/justin_bieber/justin_bieber.jpeg"
+  href: "/music/#all"
+
+- name: "Brazilian"
+  class: "bg-[#1d3163]"
+  src: "https://raw.githubusercontent.com/xmp3/images/djavan/djavan.jpeg"
+  href: "/brazilian/#all"
+
+- name: "Pop"
+  class: "bg-[#477d95]"
+  src: "https://raw.githubusercontent.com/xmp3/images/the_weeknd/the_weeknd.jpeg"
+  href: "/pop/#all"
+
+- name: "Rock"
+  class: "bg-[#e13300]"
+  src: "https://raw.githubusercontent.com/xmp3/images/radiohead/radiohead.jpeg"
+  href: "/rock/#all"
+
+- name: "Electronic"
+  class: "bg-[#a855f7]"
+  src: "https://raw.githubusercontent.com/xmp3/images/avicii/avicii.jpeg"
+  href: "/edm/#all"
+
+- name: "Hip Hop"
+  class: "bg-[#777777]"
+  src: "https://raw.githubusercontent.com/xmp3/images/akon/akon.jpeg"
+  href: "/hip_hop/#all"
+
+- name: "Smooth Jazz"
+  class: "bg-[#7d4b32]"
+  src: "https://raw.githubusercontent.com/xmp3/images/kenny_g/kenny_g.jpeg"
+  href: "/smooth_jazz/#all"
+
+- name: "J-Pop Citypop"
+  class: "bg-[#2d46ba]"
+  src: "https://raw.githubusercontent.com/xmp3/images/miki_matsubara/miki_matsubara.jpeg"
+  href: "/jpop_citypop/#all"
+
+- name: "Forró"
+  class: "bg-[#e13300]"
+  src: "https://raw.githubusercontent.com/xmp3/images/tarcisio_do_acordeon/tarcisio_do_acordeon.jpeg"
+  href: "/forro/#all"
+
+- name: "90s Hits"
+  class: "bg-[#8c67ac]"
+  src: "https://raw.githubusercontent.com/xmp3/images/george_michael/george_michael.jpeg"
+  href: "/90s/#all"

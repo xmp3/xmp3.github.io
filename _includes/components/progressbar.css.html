@@ -1,0 +1,52 @@
+<style>
+  .progressbar-container {
+    width: 100%;
+    height: 20px;
+    cursor: pointer;
+    position: relative;
+    --fg-color: rgb(255,255,255);
+    --bg-color: rgba(255,255,255,.2);
+    --progressbar-height: 3px;
+    --progressbar-transform: 0%;
+    --progressbar-radius: 1px;
+  }
+  .progressbar-background,
+  .progressbar-filled-container {
+    width: 100%;
+    height: var(--progressbar-height);
+    border-radius: var(--progressbar-radius);
+  }
+  .progressbar-background {
+    top: 50%;
+    position: absolute;
+    display: flex;
+    display: -ms-flexbox;
+    pointer-events: none;
+    transform: translateY(-50%);
+    background-color: var(--bg-color);
+  }
+  .progressbar-filled-container {
+    overflow: hidden;
+  }
+  .progressbar-filled {
+    width: 100%;
+    height: var(--progressbar-height);
+    will-change: transform;
+    transform: translateX(clamp(-100% + 4px, calc(var(--progressbar-transform) - 100% + 4px), -4px));
+    border-radius: var(--progressbar-radius);
+    background-color: var(--fg-color);
+  }
+  .progressbar-thumb {
+    top: 50%;
+    left: clamp(0px, var(--progressbar-transform), calc(100% - 8px));
+    position: absolute;
+    will-change: left;
+    z-index: 100;
+    width: 8px;
+    height: 8px;
+    cursor: pointer;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    background-color: var(--fg-color);
+  }
+</style>

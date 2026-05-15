@@ -1,0 +1,51 @@
+<style>
+body main {
+  height: 100vh;
+}
+
+.listitem[attr-selected="true"] .equaliser {
+  display: block;
+  margin-right: .5rem;
+}
+
+#repeat[attr-active="true"]::before {
+  width: 4px;
+  content: "";
+  inline-size: 4px;
+  background-color: currentColor;
+  border-radius: 50%;
+  height: 4px;
+  display: block;
+  position: absolute;
+  bottom: -4px;
+  left: calc(50% + 8px);
+  transform: translate(-50%);
+}
+#repeat[attr-active="false"] {
+  color: #b3b3b3;
+}
+
+@keyframes marquee-scroll {
+  from {transform: translateX(0);}
+  to {transform: translateX(-50%);}
+}
+
+.marquee-scroll {
+  display: inline-block;
+  width: max-content;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee-scroll var(--marquee-duration, 8s) linear infinite;
+}
+
+.marquee-scroll::after {
+  content: attr(data-text);
+  padding-left: 1.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-scroll {
+    animation: none;
+  }
+}
+</style>
